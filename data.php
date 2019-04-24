@@ -15,7 +15,7 @@ $user_avatar = 'img/user.jpg';
 $now_date = strtotime('now');
 $midnight_date = strtotime('midnight');
 
-$lot_time_remaining = gmdate("H:i", $midnight_date - $now_date);
+$lot_time_remaining = gmdate("H:i:s", $midnight_date - $now_date);
 
 $categories = ["Доски и лыжи","Крепления","Ботинки","Одежда","Инструменты","Разное"];
 

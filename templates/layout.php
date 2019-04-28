@@ -11,7 +11,7 @@
 <header class="main-header">
     <div class="main-header__container container">
         <h1 class="visually-hidden">YetiCave</h1>
-        <a class="main-header__logo">
+        <a href="index.php" class="main-header__logo">
             <img src="img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
         </a>
         <form class="main-header__search" method="get" action="https://echo.htmlacademy.ru">
@@ -21,9 +21,32 @@
         <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
 
         <nav class="user-menu">
-
+            <?php
+            if (!empty($_SESSION['user'])) {
+            ?>
+            <div class="user-menu__image">
+                <!-- <img src="" width="40" height="40" alt="Пользователь"> -->
+            </div>
+            <div class="user-menu__logged">
+                <p><?= $_SESSION['user']['name']; ?></p>
+                <p><a href="logout.php">Выход</a></p>
+            </div>
+            <?php
+            }
+            else {
+            ?>
+            <ul class="user-menu__list">
+                <li class="user-menu__item">
+                    <a href="sign-up.html">Регистрация</a>
+                </li>
+                <li class="user-menu__item">
+                    <a href="login.php">Вход</a>
+                </li>
+            </ul>
+            <?php
+            }
+            ?>
         <!-- здесь должен быть PHP код для показа аватара пользователя -->
-
         </nav>
     </div>
 </header>

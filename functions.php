@@ -1,4 +1,5 @@
 <?php
+session_start();
 function template ($path, $array) {
     if (file_exists($path)) {
         ob_start();

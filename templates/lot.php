@@ -1,24 +1,15 @@
 <main>
     <nav class="nav">
         <ul class="nav__list container">
-        <li class="nav__item">
-            <a href="all-lots.html">Доски и лыжи</a>
-        </li>
-        <li class="nav__item">
-            <a href="all-lots.html">Крепления</a>
-        </li>
-        <li class="nav__item">
-            <a href="all-lots.html">Ботинки</a>
-        </li>
-        <li class="nav__item">
-            <a href="all-lots.html">Одежда</a>
-        </li>
-        <li class="nav__item">
-            <a href="all-lots.html">Инструменты</a>
-        </li>
-        <li class="nav__item">
-            <a href="all-lots.html">Разное</a>
-        </li>
+        <?php
+        foreach ($array['categories'] as $value) {
+        ?>
+            <li class="nav__item">
+                <a href="all-lots.html"><?= $value?></a>
+            </li>
+        <?php
+        }
+        ?>
         </ul>
     </nav>
     <section class="lot-item container">
@@ -41,6 +32,9 @@
             равнодушным.</p>
         </div>
         <div class="lot-item__right">
+            <?php
+            if (!empty($_SESSION['user'])) {
+            ?>
             <div class="lot-item__state">
             <div class="lot-item__timer timer">
                 <?php print($array['lot_time_remaining'])?>
@@ -78,6 +72,9 @@
                 ?>
             </table>
             </div>
+            <?php
+            }
+            ?>
         </div>
         </div>
     </section>

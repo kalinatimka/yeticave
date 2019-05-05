@@ -37,7 +37,7 @@
             ?>
             <ul class="user-menu__list">
                 <li class="user-menu__item">
-                    <a href="sign-up.html">Регистрация</a>
+                    <a href="sign-up.php">Регистрация</a>
                 </li>
                 <li class="user-menu__item">
                     <a href="login.php">Вход</a>
@@ -57,10 +57,10 @@
     <nav class="nav">
         <ul class="nav__list container">
         <?php
-            foreach($array['categories'] as $key => $value) {
+            foreach($array['categories'] as $value) {
         ?>
             <li class="nav__item">
-                <a href="all-lots.html"><?= $value;?></a>
+                <a href="all-lots.html"><?= $value['title'];?></a>
             </li>
         <?php
             }

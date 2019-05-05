@@ -5,20 +5,20 @@
         foreach($array['categories'] as $value) {
         ?>
             <li class="nav__item">
-                <a href="all-lots.html"><?=$value?></a>
+                <a href="all-lots.html"><?=$value['title']?></a>
             </li>
         <?php
         }
         ?>
         </ul>
     </nav>
-    <form class="form form--add-lot container <?php count($array['error']) !== 0 ? print "form--invalid" : print ""; ?>" action="add.php" method="post" enctype="multipart/from-data"> <!-- form--invalid -->
+    <form class="form form--add-lot container <?php count($array['error']) !== 0 ? print "form--invalid" : print ""; ?>" action="add.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
         <h2>Добавление лота</h2>
         <div class="form__container-two">
         <div class="form__item <?php isset($array['error']['lot-name']) ? print "form__item--invalid" : print ""; ?>"> <!-- form__item--invalid -->
             <label for="lot-name">Наименование</label>
             <input id="lot-name" type="text" name="lot-name" placeholder="Введите наименование лота" required value="<?=$array['temp_data']['lot-name']?>">
-            <span class="form__error"><?=$array['error']['lot-name']?></span>
+            <span class="form__error">Напишите название лота</span>
         </div>
         <div class="form__item <?php isset($array['error']['category']) ? print "form__item--invalid" : print ""; ?>">
             <label for="category">Категория</label>
@@ -27,7 +27,7 @@
             <?php
             foreach ($array['categories'] as $value) {
             ?>
-                <option><?=$value?></option>
+                <option><?=$value['title']?></option>
             <?php
             }
             ?>
@@ -37,7 +37,7 @@
         </div>
         <div class="form__item form__item--wide <?php isset($array['error']['message']) ? print "form__item--invalid" : print ""; ?>">
         <label for="message">Описание</label>
-        <textarea id="message" name="message" placeholder="Напишите описание лота" ><?=$array['temp_data']['message']?></textarea>
+        <textarea id="message" name="message" placeholder="Напишите описание лота" required><?=$array['temp_data']['message']?></textarea>
         <span class="form__error">Напишите описание лота</span>
         </div>
         <div class="form__item form__item--file <?php isset($array['error']['lot-file']) ? print "form__item--uploaded" : print ""; ?>"> <!-- form__item--uploaded -->
@@ -68,7 +68,7 @@
         </div>
         <div class="form__item <?php isset($array['error']['lot-date']) ? print "form__item--invalid" : print ""; ?>">
             <label for="lot-date">Дата окончания торгов</label>
-            <input class="form__input-date" id="lot-date" type="date" name="lot-date" required value="<?=$array['temp_data']['lot-date']?>">
+            <input class="form__input-date" id="lot-date" type="datetime-local" name="lot-date" required value="<?=$array['temp_data']['lot-date']?>">
             <span class="form__error">Введите дату завершения торгов</span>
         </div>
         </div>

@@ -2,8 +2,51 @@
 require_once('data.php');
 require_once('functions.php');
 
-$lot = $_GET['lot'];
-$lot_info = $announcements[$lot];
+$lot = isset($_GET['lot']) == true ? intval($_GET['lot']) : intval($_POST['id']);
+$con = connectToDb();
+if (!$con) {
+    print("Ошибка подключения: " . mysqli_connect_error());
+}
+else {
+    if (isset($_POST['cost'])) {
+        $bet = intval($_POST['cost']);
+        $query = "SELECT bet_step, MAX(bet.price) AS cur_price FROM lot
+                  JOIN bet
+                  ON bet.id_lot = lot.id
+                  WHERE lot.id = " . $lot;
+        $bet_info = selectFromDb($con, $query)[0];
+        if ($bet >= ($bet_info['bet_step'] + $bet_info['cur_price'])) {
+            $user_id = $_SESSION['user']['id'];
+            $query = "INSERT INTO bet (dateNtime, price, id_user, id_lot) VALUES (NOW(), $bet, $user_id, $lot)";
+            $result = mysqli_query($con, $query);
+            if (!$result) {
+                print("Ошибка Mysql: " . mysqli_error($con));
+                // Шаблон с ошибкой
+            }
+            header("Location: /lot.php?lot=" . $lot);
+        }
+    }
+    $query = "SELECT lot.id, creating_date, lot.name, description, image_link, start_price, end_date, bet_step, fav_count, user.name AS creator, title AS category, MAX(bet.price) AS cur_price
+              FROM lot
+              JOIN category
+              ON lot.id_category = category.id
+              JOIN user
+              ON lot.id_creator = user.id
+              JOIN bet
+              ON bet.id_lot = lot.id
+              WHERE lot.id = " . $lot;
+    $lot_info = selectFromDb($con, $query)[0];
+    // var_dump($lot_info);
+    $min_bet = isset($lot_info['cur_price']) == true ? ($lot_info['cur_price'] + $lot_info['bet_step']) : $lot_info['start_price'];
+    $query = "SELECT dateNtime, price, user.name
+              FROM bet
+              JOIN user
+              ON bet.id_user = user.id
+              WHERE bet.id_lot = " . $lot . "
+              ORDER BY dateNtime DESC";
+    $bets = selectFromDb($con, $query);
+    // var_dump($bets);
+}
 
 $cookie_name = "history";
 $cookie_expire = strtotime("+1 year");
@@ -32,8 +75,8 @@ else {
     setcookie($cookie_name, json_encode($arr_history), $cookie_expire, $path);
 }
 
-$page_content = template('templates/lot.php', ['lot_time_remaining' => $lot_time_remaining, 'bets' => $bets, 'lot_info'=>$lot_info, 'categories' => $categories]);
-$layout_content = template('templates/layout.php', ['content' => $page_content, 'page_name' => 'Лот | '.$lot_info['title'], 'categories' => $categories]);
+$page_content = template('templates/lot.php', ['bets' => $bets, 'lot_info' => $lot_info, 'categories' => $categories, 'min_bet' => $min_bet]);
+$layout_content = template('templates/layout.php', ['content' => $page_content, 'page_name' => 'Лот | '.$lot_info['name'], 'categories' => $categories]);
 print($layout_content);
 
 

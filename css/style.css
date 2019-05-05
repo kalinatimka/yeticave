@@ -65,7 +65,8 @@ h2 {
   color: #2590c6;
 }
 
-.visually-hidden {
+.visually-hidden,
+.form__input-file .visually-hidden {
   position: absolute;
   width: 1px;
   height: 1px;

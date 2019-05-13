@@ -109,7 +109,13 @@ h2 {
   background-color: #45abde;
   opacity: 0.2;
 }
-
+.pagination-item .link-disabled {
+  color: #c6cacb;
+  cursor: default;
+}
+.pagination-item .link-disabled:hover {
+  color: #c6cacb;
+}
 .rub {
   display: inline-block;
   width: 12px;
@@ -249,6 +255,12 @@ h2 {
   color: #879296;
   font-size: 13px;
   font-weight: 400;
+}
+
+.user-menu__logged a.my-lots {
+  color: #879296;
+  font-weight: 400;
+  font-size: 16px;
 }
 
 .user-menu__logged a:hover {
@@ -556,12 +568,13 @@ h2 {
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: flex-start;
+  justify-content: flex-start;
   margin: 0;
   padding: 0;
   list-style: none;
+  margin-left: -30px;
 }
 
 .lots__item {
@@ -569,6 +582,7 @@ h2 {
 }
 
 .lot {
+  margin-left: 30px;
   margin-bottom: 30px;
   background-color: #ffffff;
 }
@@ -984,7 +998,7 @@ input:invalid .form__error{
   -webkit-align-self: flex-end;
   -ms-flex-item-align: end;
   align-self: flex-end;
-  width: 80px;
+  display: inline-block;
   margin-bottom: 19px;
   box-sizing: border-box;
 }
@@ -1196,7 +1210,8 @@ input:invalid .form__error{
 }
 
 .rates__timer .timer {
-  width: 82px;
+  width: 98px;
+  text-align: center;
   box-sizing: border-box;
 }
 

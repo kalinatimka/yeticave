@@ -8,7 +8,7 @@
         foreach ($array['categories'] as $value) {
         ?>
             <li class="nav__item">
-                <a href="all-lots.html"><?= $value['title']?></a>
+                <a href="category.php?id=<?=$value['id']?>"><?= $value['title']?></a>
             </li>
         <?php
         }
@@ -31,7 +31,7 @@
             ?>
             <div class="lot-item__state">
             <div class="lot-item__timer timer">
-                <?=timeToClose($array['lot_info']['end_date'])?>
+                <?=timeToClose($array['lot_info']['timer'])?>
             </div>
             <div class="lot-item__cost-state">
                 <div class="lot-item__rate">
@@ -48,7 +48,7 @@
                 <input id="cost" type="number" name="cost" placeholder="<?=$array['min_bet']?>" min="<?=$array['min_bet']?>" required>
                 <input type="hidden" name="id" value="<?=$array['lot_info']['id']?>">
                 </p>
-                <button type="submit" class="button">Сделать ставку</button>
+                <button type="submit" class="button" <?=$_SESSION['user']['id'] == $array['lot_info']['id_creator'] ? 'disabled' : ''?>>Сделать ставку</button>
             </form>
             </div>
             <div class="history">

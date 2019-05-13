@@ -3,6 +3,10 @@ require_once('data.php');
 require_once('functions.php');
 
 $lot = isset($_GET['lot']) == true ? intval($_GET['lot']) : intval($_POST['id']);
+if ($lot == 0) {
+    header('Location: /');
+}
+
 $con = connectToDb();
 if (!$con) {
     print("Ошибка подключения: " . mysqli_connect_error());
@@ -26,7 +30,7 @@ else {
             header("Location: /lot.php?lot=" . $lot);
         }
     }
-    $query = "SELECT lot.id, creating_date, lot.name, description, image_link, start_price, end_date, bet_step, fav_count, user.name AS creator, title AS category, MAX(bet.price) AS cur_price
+    $query = "SELECT lot.id, TIMESTAMPDIFF(SECOND, NOW(), end_date) AS timer, lot.name, description, image_link, start_price, bet_step, id_creator, user.name AS creator, title AS category, MAX(bet.price) AS cur_price
               FROM lot
               JOIN category
               ON lot.id_category = category.id
@@ -38,12 +42,12 @@ else {
     $lot_info = selectFromDb($con, $query)[0];
     // var_dump($lot_info);
     $min_bet = isset($lot_info['cur_price']) == true ? ($lot_info['cur_price'] + $lot_info['bet_step']) : $lot_info['start_price'];
-    $query = "SELECT dateNtime, price, user.name
+    $query = "SELECT price, user.name, TIMESTAMPDIFF(SECOND, dateNtime, NOW()) AS dateNtime
               FROM bet
               JOIN user
               ON bet.id_user = user.id
               WHERE bet.id_lot = " . $lot . "
-              ORDER BY dateNtime DESC";
+              ORDER BY dateNtime";
     $bets = selectFromDb($con, $query);
     // var_dump($bets);
 }

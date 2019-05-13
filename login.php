@@ -19,7 +19,7 @@ if (!empty($login_data)) {
                 else {
                     session_start();
                     $_SESSION['user'] = $value;
-                    header("Location: /index.php");
+                    header("Location: /");
                 }
                 break;
             }

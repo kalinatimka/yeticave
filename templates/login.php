@@ -5,7 +5,7 @@
         foreach($array['categories'] as $value) {
         ?>
             <li class="nav__item">
-                <a href="all-lots.html"><?=$value?></a>
+                <a href="category.php?id=<?=$value['id']?>"><?=$value['title']?></a>
             </li>
         <?php
         }

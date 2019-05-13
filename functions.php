@@ -1,5 +1,9 @@
 <?php
 session_start();
+
+$items_per_page = 9;
+$time_finishing = 86400;
+
 function template ($path, $array) {
     if (file_exists($path)) {
         ob_start();
@@ -25,7 +29,6 @@ function form_validate ($array, $array2 = null) {
                 $errors['email'] = "Duplicate!";
             }
         }
-        // проверка email на дублирование
     }
     return $errors;
 }
@@ -48,7 +51,7 @@ function selectFromDb($con, $query) {
 }
 
 function showDate($time) { // Определяем количество и тип единицы измерения
-    $time = time() - strtotime($time);
+    // $time = time() - strtotime($time);
     if ($time < 60) {
         return '< минуты назад';
     } elseif ($time < 3600) {
@@ -61,6 +64,19 @@ function showDate($time) { // Определяем количество и ти�
         return dimension((int)($time/2592000), 'n') . ' назад';
     } elseif ($time >= 31104000) {
         return dimension((int)($time/31104000), 'Y') . ' назад';
+    }
+}
+
+function timeToClose($time) {
+    // $time = strtotime($time) - time();
+    if ($time < 86400) {
+        return gmdate("H:i:s", $time);
+    } elseif ($time < 2592000) {
+        return dimension((int)($time/86400), 'j');
+    } elseif ($time < 31104000) {
+        return dimension((int)($time/2592000), 'n');
+    } elseif ($time >= 31104000) {
+        return dimension((int)($time/31104000), 'Y');
     }
 }
 
@@ -83,15 +99,3 @@ function dimension($time, $type) { // Определяем склонение е
     return $time.' '.$dimension[$type][$n];
 }
 
-function timeToClose($time) {
-    $result = strtotime($time) - time();
-    if ($result < 86400) {
-        return gmdate("H:i:s", $result);
-    } elseif ($result < 2592000) {
-        return dimension((int)($result/86400), 'j');
-    } elseif ($result < 31104000) {
-        return dimension((int)($result/2592000), 'n');
-    } elseif ($result >= 31104000) {
-        return dimension((int)($result/31104000), 'Y');
-    }
-}

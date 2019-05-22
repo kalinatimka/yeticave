@@ -1,0 +1,14 @@
+{
+    "name": "kalinatimka/yeticave",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Timofey",
+            "email": "kalinata0799@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "swiftmailer/swiftmailer": "^6.2@dev"
+    }
+}

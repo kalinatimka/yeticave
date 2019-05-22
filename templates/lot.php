@@ -48,7 +48,7 @@
                 <input id="cost" type="number" name="cost" placeholder="<?=$array['min_bet']?>" min="<?=$array['min_bet']?>" required>
                 <input type="hidden" name="id" value="<?=$array['lot_info']['id']?>">
                 </p>
-                <button type="submit" class="button" <?=$_SESSION['user']['id'] == $array['lot_info']['id_creator'] ? 'disabled' : ''?>>Сделать ставку</button>
+                <button type="submit" class="button" <?=$_SESSION['user']['id'] == $array['lot_info']['id_creator'] || $array['lot_info']['id_winner'] != null ? 'disabled' : ''?>>Сделать ставку</button>
             </form>
             </div>
             <div class="history">

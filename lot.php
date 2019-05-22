@@ -30,7 +30,7 @@ else {
             header("Location: /lot.php?lot=" . $lot);
         }
     }
-    $query = "SELECT lot.id, TIMESTAMPDIFF(SECOND, NOW(), end_date) AS timer, lot.name, description, image_link, start_price, bet_step, id_creator, user.name AS creator, title AS category, MAX(bet.price) AS cur_price
+    $query = "SELECT lot.id, id_winner, TIMESTAMPDIFF(SECOND, NOW(), end_date) AS timer, lot.name, description, image_link, start_price, bet_step, id_creator, user.name AS creator, title AS category, MAX(bet.price) AS cur_price
               FROM lot
               JOIN category
               ON lot.id_category = category.id

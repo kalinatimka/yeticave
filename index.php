@@ -1,7 +1,7 @@
 <?php
 require_once('data.php');
 require_once('functions.php');
-
+require_once('getwinner.php');
 
 $con = connectToDb();
 
@@ -23,6 +23,7 @@ else {
               FROM lot
               JOIN category
               ON lot.id_category = category.id
+              WHERE id_winner IS NULL
               ORDER BY end_date LIMIT $items_per_page OFFSET $offset";
     if (!$query) {
         $err = mysqli_error($con);

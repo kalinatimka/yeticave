@@ -69,7 +69,10 @@ function showDate($time) { // Определяем количество и ти�
 
 function timeToClose($time) {
     // $time = strtotime($time) - time();
-    if ($time < 86400) {
+    if ($time < 0) {
+        return "Торги окончены";
+    }
+    elseif ($time < 86400) {
         return gmdate("H:i:s", $time);
     } elseif ($time < 2592000) {
         return dimension((int)($time/86400), 'j');
